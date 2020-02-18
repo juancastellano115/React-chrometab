@@ -1,5 +1,5 @@
 import React from 'react';
-export default class ShoppingList extends React.Component {
+class ShoppingList extends React.Component {
     render() {
       return (
         <div className="shopping-list">
@@ -14,4 +14,5 @@ export default class ShoppingList extends React.Component {
     }
   }
   
+  export default ShoppingList
   // Example usage: <ShoppingList name="Mark" />
