@@ -1,5 +1,6 @@
 import React from 'react';
 import Sol from './img/sol.png'
+import Tilt from 'react-tilt'
 
 class Card extends React.Component {
 
@@ -9,10 +10,10 @@ class Card extends React.Component {
 
     render() {
         return (
-            <div className='card'>
+            <Tilt className='card'>
                 
                 <h1>Tarjetita to cremas</h1>
-            </div>
+            </Tilt>
         );
 
     }
