@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Clock />
-        <Card />
+        <Card header="Nublado" desc="3°-16°" />
       </header>
       
     </div>

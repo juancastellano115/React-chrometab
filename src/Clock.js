@@ -26,7 +26,7 @@ class Clock extends React.Component {
     return (
       <div>
         <img src="img/sol.png" alt=""/>
-        <h1>It is {this.state.date.toLocaleTimeString()}</h1>
+        <h1>{this.state.date.toLocaleTimeString()}</h1>
       </div>
     );
   }
