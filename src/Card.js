@@ -11,7 +11,7 @@ class Card extends React.Component {
     return (
       <Tilt className="card">
         <h2>{this.props.header}</h2>
-        <i class="fas fa-cloud"></i>
+        <i className="fas fa-cloud"></i>
         <p>{this.props.desc}</p>
       </Tilt>
     );
