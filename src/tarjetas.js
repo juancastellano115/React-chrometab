@@ -1,6 +1,5 @@
 import React from 'react';
 import Card from './Card';
-import { render } from '@testing-library/react';
 
 
 class Tarjetas extends React.Component {
@@ -36,15 +35,19 @@ class Tarjetas extends React.Component {
             this.setState({ cargando: false });
         }
     }
+
     render() {
         return (
             <div>
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-            </div>
+            {this.state.cargando ? (
+              "cargando"
+            ) : (
+              <div>
+              <Card datos={this.state.weatherData} />
+              <Card datos={this.state.weatherData} />
+              </div>
+            )}
+          </div>
         );
     }
 }
