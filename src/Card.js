@@ -5,14 +5,17 @@ import Tilt from "react-tilt";
 class Card extends React.Component {
   constructor(props) {
     super(props);
+    this.Datos = props.datos;
   }
 
+  Datos = Object;
   render() {
     return (
       <Tilt className="card">
-        <h2>{this.props.header}</h2>
+        <h2>{this.Datos.city}</h2>
         <i className="fas fa-cloud"></i>
-        <p>{this.props.desc}</p>
+        <p>{this.Datos.max}</p>
+        <p>{this.Datos.min}</p>
       </Tilt>
     );
   }
