@@ -63,9 +63,11 @@ class Tarjetas extends React.Component {
           <div>
             <h1>{this.state.city}</h1>
             <p>{this.state.headline.Text}</p>
+            <div className="contenedorTarjetas">
             {this.state.weatherData.map(tarjeta => (
               <Card datos={tarjeta} />
             ))}
+            </div>
           </div>
         )}
       </div>

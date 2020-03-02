@@ -16,13 +16,35 @@ class Card extends React.Component {
     return(<img src={this.urlIcono+icono+"-s.png"} alt="icon"></img>)
   }
 
+  getDayOfWeek(date){
+    let fecha = new Date(date).getDay();
+    switch (fecha) {
+      case 0:
+        return "Domingo"
+      case 1:
+        return "Lunes"
+      case 2:
+        return "Martes"
+      case 3:
+        return "Miercoles"
+      case 4:
+        return "Jueves"
+      case 5:
+        return "Viernes"
+      case 6:
+        return "Sabado"
+      default:
+        break;
+    }
+  }
   Datos = Object;
   render() {
     return (
       <Tilt className="card">
-        <h2>{this.Datos.Day.IconPhrase}</h2>
+        <h3>{this.getDayOfWeek(this.Datos.Date)}</h3>
+        <p>{this.Datos.Day.IconPhrase}</p>
        {this.elegirIcono(this.Datos.Night.Icon)}
-    <p>{this.Datos.Temperature.Minimum.Value}º-{this.Datos.Temperature.Maximum.Value}º</p>
+      <h4>{this.Datos.Temperature.Minimum.Value}º-{this.Datos.Temperature.Maximum.Value}º</h4>
       </Tilt>
     );
   }
