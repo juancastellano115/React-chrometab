@@ -1,78 +1,82 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
+import { CSSTransition } from 'react-transition-group';
+import './transition.css'
+export default function Tarjetas() {
+  const [cargando, setcargando] = useState(true);
+  const [geo, setgeo] = useState("");
+  const [city, setcity] = useState("");
+  const [weatherData, setweatherData] = useState({});
 
-class Tarjetas extends React.Component {
-  url =
-    "http://api.openweathermap.org/data/2.5/weather?appid=19959cc224bcd5fca2667dda06dd0e66&units=metric";
-  accu = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/";
-  geolocation =
+  const accu = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/";
+  let geolocation =
     "http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=QG7VY9lNLMTQXghXPt8bUjyGh3H34ztU&language=es-es&details=false&q=";
 
-  constructor() {
-    super();
-    this.state = { cargando: true };
-  }
-  componentDidMount() {
+  useEffect(() => {
     if ("geolocation" in navigator) {
-      //check Geolocation available
-
+      //Comprobar geolocalización del usuario
       navigator.geolocation.getCurrentPosition(position => {
-        this.geolocation += encodeURI(
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        geolocation += encodeURI(
           position.coords.latitude + "," + position.coords.longitude
         );
-        this.getWeatherData();
+        getWeatherData();
       });
     } else {
       console.log("Error al obtener geolocalización");
     }
-  }
+  }, []);
 
-  async getWeatherData() {
-    await fetch(this.geolocation).then(async res => {
+  useEffect(() => {
+    if (geo !== "") {
+      let url =
+        accu +
+        geo +
+        "?apikey=QG7VY9lNLMTQXghXPt8bUjyGh3H34ztU&language=es-es&details=false&metric=true";
+      async function fetchWeather () {
+          
+        let response = await fetch(url);
+        if (response.ok) {
+
+          let json = await response.json();
+          setweatherData({datosTiempo: json.DailyForecasts, headline: json.Headline})
+          setcargando(false)
+        }
+      }
+      fetchWeather()
+    }
+  }, [geo]);
+  const getWeatherData = async () => {
+    await fetch(geolocation).then(async res => {
       if (res.ok) {
         let datoslocalizacion = await res.json();
-        this.setState({
-          geo: datoslocalizacion.Key,
-          city: datoslocalizacion.LocalizedName
-        });
+        setgeo(datoslocalizacion.Key);
+        setcity(datoslocalizacion.LocalizedName);
       }
     });
-    let url =
-      this.accu +
-      this.state.geo +
-      "?apikey=QG7VY9lNLMTQXghXPt8bUjyGh3H34ztU&language=es-es&details=false&metric=true";
-    console.log(url);
-    let response = await fetch(url);
-    if (response.ok) {
-      // if HTTP-status is 200-299
-      // get the response body (the method explained below)
-      let json = await response.json();
-      this.setState({ weatherData: json.DailyForecasts });
-      this.setState({ headline: json.Headline });
-
-      this.setState({ cargando: false });
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        {this.state.cargando ? (
-          "cargando"
-        ) : (
-          <div>
-            <h1>{this.state.city}</h1>
-            <p>{this.state.headline.Text}</p>
-            <div className="contenedorTarjetas">
-            {this.state.weatherData.map(tarjeta => (
-              <Card datos={tarjeta} />
+  };
+  return (
+    <div>
+      {cargando ? (
+        "Cargando..."
+      ) : (
+        <div>
+          <h1>{city}</h1>
+          <p>{weatherData.headline.Text}</p>
+          <CSSTransition
+          in={true}
+          appear={true}
+          timeout={1000}
+          classNames="fade"
+        >
+          <div className="contenedorTarjetas">
+            {weatherData.datosTiempo.map((tarjeta,index) => (
+              <Card datos={tarjeta} key={index} />
             ))}
-            </div>
           </div>
-        )}
-      </div>
-    );
-  }
+          </CSSTransition>
+        </div>
+      )}
+    </div>
+  );
 }
-
-export default Tarjetas;

@@ -1,34 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-class Clock extends React.Component {
-  constructor() {
-    super();
-    this.state = { date: new Date() };
-  }
-  // Cuando se crea el componente
-  componentDidMount() {
-    this.timerID = setInterval(() => this.tick(), 1000);
-  }
-  // Cuando se borra el componente
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-  // esta funcion es llamada cada segundo para generar una nueva fecha en el estado "date"
-  tick() {
-    this.setState({
-      date: new Date()
-    });
-  }
+export default function Clock() {
 
-  // Render es llamado cuando se llama al constructor del componente y devuelve return
-  render() {
-    return (
-      <div>
-        <img src="img/sol.png" alt=""/>
-        <h1>{this.state.date.toLocaleTimeString()}</h1>
-      </div>
-    );
-  }
+const [hora, sethora] = useState(new Date() )
+
+const tick = () =>{
+ sethora(new Date())
 }
 
-export default Clock;
+useEffect(() => {
+  setInterval(() => tick(), 1000)
+}, [])
+
+  return (
+    <div>
+       <div>
+        <h1>{hora.toLocaleTimeString()}</h1>
+      </div>
+    </div>
+  )
+}
