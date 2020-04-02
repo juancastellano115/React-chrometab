@@ -8,9 +8,9 @@ export default function Tarjetas() {
   const [city, setcity] = useState("");
   const [weatherData, setweatherData] = useState({});
 
-  const accu = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/";
+  const accu = "https://dataservice.accuweather.com/forecasts/v1/daily/5day/";
   let geolocation =
-    "http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=QG7VY9lNLMTQXghXPt8bUjyGh3H34ztU&language=es-es&details=false&q=";
+    "https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=QG7VY9lNLMTQXghXPt8bUjyGh3H34ztU&language=es-es&details=false&q=";
 
   useEffect(() => {
     if ("geolocation" in navigator) {
